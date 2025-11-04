@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 #Ignore the data folder for git tracking
 data/
 
+=======
+>>>>>>> origin/main
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
