@@ -2,3 +2,4 @@
 - Zach Greenman - Information Management
 - Yici Chen - Information Management
 - Yi Ding - Applied Mathematics
+- AJ Mallory - Bioengineering
