@@ -1,6 +1,8 @@
 # humanSayMonkeyDo
 CSE583 project
 
+### Setup
+
 ### Monkey Datasets:
 https://dandiarchive.org/dandiset/000688
 
