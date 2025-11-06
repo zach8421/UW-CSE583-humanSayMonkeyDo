@@ -1,22 +1,23 @@
-### Use Case Name
-Export Analysis Outputs
+### Use Case: Decode Movements from Neural Data
 
-### Goal
-Allow Alice to download plots and summary metrics for presentation.
+**Goal**  
+Allow Mabel to run decoding models that predict movement direction or behavior from neural signals.
 
-### Actors / Users
-Alice
+**User**  
+Mabel
 
-### Inputs
-- Selected plots, tables, or metrics
+**Inputs**  
+- Neural activity data
+- Corresponding movement labels (e.g., target direction)
 
-### Outputs
-- PNG/SVG plots, CSV results, or PDF summary page
+**Outputs**  
+- Decoding accuracy and confusion matrix
+- Optional trained model for later use
 
-### Preconditions
-- At least one analysis has been run
-
-### Basic Flow
-1. Alice selects “Export Results.”
-2. The tool generates and downloads files automatically.
+**Steps**  
+1. Mabel loads a dataset from a new recording session.  
+2. The tool extracts neural features for each trial.  
+3. Mabel selects a decoding model (default provided).  
+4. The tool trains and evaluates the model.  
+5. Results are displayed for interpretation.
 

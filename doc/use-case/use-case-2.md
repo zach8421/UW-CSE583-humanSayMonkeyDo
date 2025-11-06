@@ -1,27 +1,19 @@
-### Use Case Name
-Load Monkey Reaching Dataset
+### Use Case: Export Analysis Outputs
 
-### Goal
-Provide ready-to-use monkey reach kinematic and neural activity data.
+**Goal**  
+Allow Alice to download plots and results for presentation or sharing.
 
-### Actors / Users
+**User**  
 Alice
 
-### Inputs
-- Monkey neural recordings (already structured)
-- Center-out reach trial metadata
+**Inputs**  
+- Selected plots or summary results
 
-### Outputs
-- Trial-aligned neural + kinematic data
+**Outputs**  
+- Downloaded files (e.g., PNG/SVG images, CSV tables, or a PDF summary)
 
-### Preconditions
-- Dataset is already formatted (no preprocessing needed)
-
-### Basic Flow
-1. Alice selects “Load Monkey Dataset.”
-2. The tool loads neural and kinematic matrices.
-3. Data is displayed in a trial browser panel.
-
-### Notes
-This dataset acts as the reference model to compare against human pseudo-kinematics.
+**Steps**  
+1. Alice clicks “Export Results.”  
+2. The tool generates the selected files.  
+3. The files download to Alice’s computer.
 

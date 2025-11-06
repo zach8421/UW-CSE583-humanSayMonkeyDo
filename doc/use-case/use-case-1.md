@@ -1,29 +1,22 @@
-### Use Case Name
-Load and Preprocess Human Attempted Speech Dataset
+### Use Case: Load and Preprocess Human Speech Dataset
 
-### Goal
-Allow Alice to load the human dataset and automatically convert phoneme labels into pseudo-kinematic time series aligned to trials.
+**Goal**  
+Let Alice load the human dataset and get it into a format that matches the monkey dataset.
 
-### Actors / Users
-Alice (non-technical neuroscience researcher)
+**User**  
+Alice
 
-### Inputs
-- Human neural recordings (e.g., NWB / NumPy arrays)
-- Phoneme annotation file (timestamps + labels)
+**Inputs**  
+- Human neural recordings  
+- Phoneme labels with timestamps  
 
-### Outputs
-- Trial-aligned pseudo-kinematic human dataset (continuous signals suitable for tuning/decoding)
+**Output**  
+- Human data organized into trials with continuous features ready for analysis  
 
-### Preconditions
-- Human dataset has been downloaded to local system
-
-### Basic Flow
-1. Alice selects “Load Human Dataset” in the interface.
-2. The tool reads the neural time series.
-3. The tool converts phoneme labels into continuous pseudo-kinematic features.
-4. The tool windows the data into trial-aligned segments.
-5. The preprocessed dataset is stored and shown as “Ready for Analysis.”
-
-### Notes / Rationale
-This allows comparison with monkey reach trials without requiring Alice to write preprocessing code.
+**Steps**  
+1. Alice clicks “Load Human Dataset.”  
+2. The tool reads the neural signals.  
+3. The tool converts phoneme labels into continuous signals.  
+4. The tool organizes the data into trials.  
+5. The processed data appears as “Ready for analysis.”
 
