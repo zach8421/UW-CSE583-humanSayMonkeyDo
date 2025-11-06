@@ -81,26 +81,26 @@ The user will clone this library to their local computer system, follow the inst
 
 #### Deliverables/Components:
 1. Database
-    a. Monkey database
-        i. Function to reformat for easy use
-    b. Human database
-        i. Function to chunk data into trials
-        ii. Function to convert phonemes into pseudo-kinematics
-    c. Formated subset of data for examples
-    d. Script to download and format full dataset
+    - Monkey database
+        - Function to reformat for easy use
+    - Human database
+        - Function to chunk data into trials
+        - Function to convert phonemes into pseudo-kinematics
+    - Formated subset of data for examples
+    - Script to download and format full dataset
 2. Analysis
-    a. Movement onset detection
-    b. Single neuron kinematic tuning
-    c. Target position decoding
+    - Movement onset detection
+    - Single neuron kinematic tuning
+    - Target position decoding
 3. Visualization
-    a. Graphically represent kinematics
-    b. Peri-stimulus Spike rasters
-    c. Decoding accuracy
-    d. Tuning curves
+    - Graphically represent kinematics
+    - Peri-stimulus Spike rasters
+    - Decoding accuracy
+    - Tuning curves
 4. Tutorial
-    a. Downloading/formating walkthrough
-    b. Dataset exploration/explanation
-    c. Analysis examples
+    - Downloading/formating walkthrough
+    - Dataset exploration/explanation
+    - Analysis examples
 
 ## Project Structure
 
