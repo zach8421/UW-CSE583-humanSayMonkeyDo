@@ -50,33 +50,57 @@ join data with different characteristics (e.g., granularity in time
 and/or space). The data must be available immediately, without concerns
 about access rights for team members or the instructors.
 
+### Ans:
+
+#### Monkey Datasets:
+https://dandiarchive.org/dandiset/000688
+
+#### Human Datasets:
+https://www.kaggle.com/competitions/brain-to-text-25/data
+
 ### Step 2: Define the Problem
 
 Determine the type of project (e.g., analysis project) and the questions
 of interest.
 
+### Ans:
+Both these datasets contain neural recordings from the same brain regions in motor cortex in macaque and human. The monkey data is during standard center out reaching task while the human recordings are taken during attempted speech. The goal of this project is to reformat the human dataset to resemble the trial structure during the reaching task and allow parallel analysis of reaching kinematics and tongue/mouth kinematics. We would like to apply 
+
 ### Step 3: Write the Functional Specification
 
-The functional specification details:
+#### Who are the users?
+Neuroscientist with domain expertise but limited coding experience. They know the basics of python and how to work with a database, but not how to build their own database. They understand these types of common scientific experimental paradigms but need a relatively streamlined coding interface to access and use the data. They are familiar with common types of analysis and machine learning/decoding but not necessarliy how to build or apply them to data.
 
--   who are the users and what do they know (e.g., business analyst)
--   what information users want from the system (e.g., where to put
-    bicycles)
--   use cases - how users interact with the system to get the
-    information they want
+#### What information does the user want?
+The neuroscientist wants to be able to access the data in the same way for both datasets and be able to apply common analysis with a function call. There should additionally be clear infrastrucure to extend on if the neuroscientist wants to change the paramters of the analysis or implement new analysis on the same data. There should be some basic data visualization to understand the results.
 
-For tool projects, the users are typically programmers, and so the
-functional specification describes the programming interface.
+#### Use cases?
+The user will clone this library to their local computer system, follow the instructions for downloading data, and then familiarize themeselves with the data and built-in analysis by running a tutorial notebook that walks them through the database and existing analysis. This will then allow them to utilize the existing functions and database to ask more specific questions or extend analysis.
 
 ### Steps 4 and beyond: Iteratively Develop And Refine the Project
 
-You will organize the project as a set of short-term deliverables.
-Typically, you focus first on those parts where you have the most
-uncertainty since projects typically fail because of "unknown unknowns".
-For some projects, this will be a data-first focus to make sure that
-your data can answer the questions that you pose. For others, it may be
-exploring a python package that you hope will provide key features
-(e.g., visualizations).
+#### Deliverables/Components:
+1. Database
+    a. Monkey database
+        i. Function to reformat for easy use
+    b. Human database
+        i. Function to chunk data into trials
+        ii. Function to convert phonemes into pseudo-kinematics
+    c. Formated subset of data for examples
+    d. Script to download and format full dataset
+2. Analysis
+    a. Movement onset detection
+    b. Single neuron kinematic tuning
+    c. Target position decoding
+3. Visualization
+    a. Graphically represent kinematics
+    b. Peri-stimulus Spike rasters
+    c. Decoding accuracy
+    d. Tuning curves
+4. Tutorial
+    a. Downloading/formating walkthrough
+    b. Dataset exploration/explanation
+    c. Analysis examples
 
 ## Project Structure
 
@@ -152,6 +176,18 @@ minutes in length. The presentation should address the following:
     potentially address your technology requirement.
 -   One slide side-by-side comparisons of the technologies. This will
     require that you actually install and use the technologies.
+
+
+### Technology review brainstorm:
+1. Machine learning libraries: We will be using a library to perform Linear Discriminant Analysis, Logistic regression, PCA etc
+    a. scikit-learn
+    b. statsmodels
+    c. Pytorch
+2. Others??
+3. Visualization/Database libraries
+    a. NWB
+    b. Spikeinterface
+    c. Flatiron
 
 ## Final Project Presentation
 
