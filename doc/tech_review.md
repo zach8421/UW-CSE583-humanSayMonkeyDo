@@ -46,7 +46,7 @@ Everyone in the team will speak
 1. Machine learning libraries: We will be using a library to perform Linear Discriminant Analysis, Logistic regression, PCA etc
     a. scikit-learn
     b. pynapple
-    c. ???
+    c. statsmodels
 2. Others??
 3. Visualization/Database libraries
     a. NWB
@@ -86,7 +86,11 @@ Questions to answer:
 4. I think so?
 5. Yes has more advanced analysis integrated into the package
 
-## ???
-
+## Statsmodels
+1. Not designed specifically for neural data; requires extra code for neural data preparation
+2. Buit in for linear and logisitc regression (with high interpretability); not ideal for Bayesian
+3. Yes built in with strong inference
+4. Possible, but less efficient and less scalable than scikit-learn
+5. Built in for inference-driven analysis, but not designed as a neural decoding toolbox
 
 ## Summary and Conclusion
