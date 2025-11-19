@@ -1,0 +1,160 @@
+[build-system]
+requires = ["setuptools>=64.0", "wheel", "setuptools_scm>=8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CSE583-humanSayMonkeyDo"
+dynamic = ["version"]
+description = "Neural data analysis for motor cortex recordings in macaque and human"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+
+authors = [
+    { name = "Zachary Greenman", email = "zach8420@uw.edu" }
+]
+
+maintainers = [
+    { name = "Zachary Greenman", email = "zach8420@uw.edu" }
+]
+
+keywords = [
+    "neuroscience",
+    "neural-data",
+    "motor-cortex",
+    "brain-computer-interface",
+    "kinematics",
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+# Core dependencies
+dependencies = [
+    "numpy>=1.20.0",
+    "pandas>=1.3.0",
+    "scipy>=1.7.0",
+    "matplotlib>=3.4.0",
+    "scikit-learn>=1.0.0",
+]
+
+[project.optional-dependencies]
+# Development dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=3.0.0",
+    "black>=22.0.0",
+    "flake8>=4.0.0",
+    "mypy>=0.950",
+    "isort>=5.10.0",
+]
+
+# Documentation dependencies
+docs = [
+    "sphinx>=4.5.0",
+    "sphinx-rtd-theme>=1.0.0",
+    "myst-parser>=0.18.0",
+]
+
+# Full installation with all extras
+all = [
+    "CSE583-humanSayMonkeyDo[dev,docs]",
+]
+
+[project.urls]
+Homepage = "https://github.com/zach8421/UW-CSE583-humanSayMonkeyDo"
+Repository = "https://github.com/zach8421/UW-CSE583-humanSayMonkeyDo"
+Issues = "https://github.com/zach8421/UW-CSE583-humanSayMonkeyDo/issues"
+Documentation = "https://github.com/zach8421/UW-CSE583-humanSayMonkeyDo/blob/main/README.md"
+
+[project.scripts]
+# Add CLI entry points here if needed
+# example-command = "CSE583_humanSayMonkeyDo.module:function"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["CSE583_humanSayMonkeyDo*"]
+
+[tool.setuptools_scm]
+# You can leave this empty to use defaults, or later customize:
+# version_scheme = "guess-next-dev"
+# local_scheme = "node-and-date"
+
+# Black code formatter configuration
+[tool.black]
+line-length = 88
+target-version = ["py38", "py39", "py310", "py311"]
+include = "\\.pyi?$"
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort import sorter configuration
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+# pytest configuration
+[tool.pytest.ini_options]
+addopts = "-ra -q --strict-markers"
+minversion = "7.0"
+testpaths = [
+    "tests",
+]
+pythonpath = [
+    "src",
+]
+
+# mypy type checker configuration
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
