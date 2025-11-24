@@ -1,0 +1,10 @@
+project_name: humanSayMonkeyDo
+data:
+  root: data
+  monkey: data/monkey
+  human: data/human
+  monkey_subjects:
+    - data/monkey/sub-J
+dandi:
+  dataset_id: "000688"
+  version: "0.250122.1735"

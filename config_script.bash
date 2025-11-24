@@ -24,6 +24,7 @@ else
         else
             echo "Error: Failed to create environment"
             exit 1
+        fi
     else
         echo "Unable to identify correct environment file. Ensure that current folder is in the main humanSayMonkeyDo folder..."
     fi
@@ -31,6 +32,7 @@ fi
 
 
 #activate environemnt
+source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate humanSayMonkeyDo
 
 #create file structure
