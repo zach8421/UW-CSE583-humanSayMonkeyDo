@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "CSE583-humanSayMonkeyDo"
-dynamic = ["version"]
+version = "0.1.0"
 description = "Neural data analysis for motor cortex recordings in macaque and human"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -87,11 +87,6 @@ package-dir = { "" = "src" }
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["CSE583_humanSayMonkeyDo*"]
-
-[tool.setuptools_scm]
-# You can leave this empty to use defaults, or later customize:
-# version_scheme = "guess-next-dev"
-# local_scheme = "node-and-date"
 
 # Black code formatter configuration
 [tool.black]
