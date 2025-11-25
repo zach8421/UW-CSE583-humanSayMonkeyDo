@@ -12,7 +12,7 @@ dependencies:
   - pandas
   - ipywidgets
   - scikit-learn
-  -pynwb
+  - pynwb
   - pip
   - pip:
     - dandi
