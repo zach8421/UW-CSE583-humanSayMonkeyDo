@@ -14,5 +14,6 @@ dependencies:
   - scikit-learn
   - pynwb
   - pip
+  - pytest
   - pip:
     - dandi
