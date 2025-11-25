@@ -3,7 +3,7 @@ requires = ["setuptools>=64.0", "wheel", "setuptools_scm>=8.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "CSE583-humanSayMonkeyDo"
+name = "CSE583_humanSayMonkeyDo"
 version = "0.1.0"
 description = "Neural data analysis for motor cortex recordings in macaque and human"
 readme = "README.md"
