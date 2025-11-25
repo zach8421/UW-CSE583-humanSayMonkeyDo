@@ -12,6 +12,7 @@ dependencies:
   - pandas
   - ipywidgets
   - scikit-learn
+  - seaborn 
   - pynwb
   - pip
   - pytest
