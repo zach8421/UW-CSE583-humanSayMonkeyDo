@@ -1,4 +1,7 @@
-cat "checking conda install..."
+# ensure the script runs from the project directory
+cd "$(dirname "$0")" || exit
+
+echo "checking conda install..."
 #check if the user has conda installed
 if command -v conda &> /dev/null
 then
@@ -14,7 +17,7 @@ fi
 if conda env list | grep -q "^humanSayMonkeyDo "; then
     echo "Environment 'humanSayMonkeyDo' already exists, continuing to data"
 else
-    echo "Environment does not exist, initializign conda environment"
+    echo "Environment does not exist, initializing conda environment"
 
     #check that we are usign the correct environment file
     if [[ -f "environment.yaml" ]] && head -n 1 environment.yaml | grep -q "humanSayMonkeyDo"; then
@@ -37,26 +40,29 @@ conda activate humanSayMonkeyDo
 
 #create file structure
 echo "creating data folder structure" 
-mkdir data
-mkdir data/monkey
-mkdir data/human
+mkdir -p data/monkey
+mkdir -p data/human
 
 echo "downloading monkey data..."
 cd ./data/monkey
 
 #Give option of downloading full dataset or partial
-read -p "Would you like to download the full dataset or a subset? (full/subset): " choice
+while true; do
+    read -p "Would you like to download the full dataset or a subset? (full/subset): " choice
 
-if [[ "$choice" == "full" ]]; then
-    echo "Downloading full dataset..."
-    dandi download DANDI:000688/0.250122.1735
-    mv 000688/* .
-elif [[ "$choice" == "subset" ]]; then
-    echo "Downloading subset..."
-    dandi download "https://dandiarchive.org/dandiset/000688/0.250122.1735/files?location=sub-J"
-else
-    echo "Invalid choice. Please enter 'full' or 'subset'"
-    exit 1
-fi
+    if [[ "$choice" == "full" ]]; then
+        echo "Downloading full dataset..."
+        dandi download DANDI:000688/0.250122.1735
+        mv 000688/* .
+        rmdir 000688 # clean up the empty folder
+        break
+    elif [[ "$choice" == "subset" ]]; then
+        echo "Downloading subset..."
+        dandi download "https://dandiarchive.org/dandiset/000688/0.250122.1735/files?location=sub-J"
+        break
+    else
+        echo "Invalid choice. Please enter 'full' or 'subset'"
+    fi
+done
 
 echo "TODO: download human dataset"
