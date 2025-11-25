@@ -79,12 +79,38 @@ rmdir 000688
 
 #### Option B: Download Subset (Recommended for Testing)
 ```bash
-dandi download "https://dandiarchive.org/dandiset/000688/0.250122.1735/files?location=sub-J"
+dandi download -e REFRESH -f PYOUT --path-type EXACT "https://dandiarchive.org/dandiset/000688/0.250122.1735/files?location=sub-J"
 ```
 
 This downloads only the subset containing subject J data, which is sufficient for testing and development.
 
-### 6. Verify Installation
+### 6. Download the Human Dataset
+
+Navigate to the monkey data directory:
+```bash
+cd data/human
+```
+
+You have two options for downloading the dataset:
+
+#### Option A: Download Full Dataset
+```bash
+dandi download DANDI:000019/0.220126.2148
+mv 000019/* .
+rmdir 000688
+```
+
+**Warning**: The full dataset is large and may take significant time and storage space.
+
+#### Option B: Download Subset (Recommended for Testing)
+```bash
+dandi download -e REFRESH -f PYOUT --path-type EXACT "https://dandiarchive.org/dandiset/000019/0.220126.2148/files?location=sub-GP33"
+```
+
+This downloads only the subset containing subject J data, which is sufficient for testing and development.
+
+
+### 7. Verify Installation
 
 Return to the project root:
 ```bash
@@ -98,7 +124,7 @@ ls -la data/monkey/
 
 You should see `.nwb` files in this directory.
 
-### 7. Test Your Setup
+### 8. Test Your Setup
 
 Run a quick test to ensure everything is working:
 ```bash

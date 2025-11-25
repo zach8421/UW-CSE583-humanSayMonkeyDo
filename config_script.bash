@@ -51,10 +51,9 @@ download_dandi_dataset() {
         elif [[ "$choice" == "subset" ]]; then
             echo "Downloading subset..."
             if [ -n "$subset_filter" ]; then
-                #dandi download "https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
-                dandi download -e REFRESH -f PYOUT --path-type EXACT "https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
-                #echo "https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
-                #dandi download --existing REFRESH "https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
+                download_url="https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
+                echo "Downloading from URL: $download_url"
+                dandi download -e REFRESH -f PYOUT --path-type EXACT "$download_url"
             else
                 echo "Error: No subset filter defined for this dataset"
                 exit 1
