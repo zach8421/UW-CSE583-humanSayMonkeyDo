@@ -46,4 +46,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          python -m pytest --cov=humanSayMonkeyDo --cov-report=term-missing
+          python -m pytest
