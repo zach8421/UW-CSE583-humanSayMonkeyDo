@@ -30,7 +30,9 @@ jobs:
           python-version: ${{ env.PYTHON }}
           environment-file: environment.yaml
           activate-environment: ${{ env.ENV_NAME }}
-          conda-remove-defaults: "true"
+          conda-remove-defaults: true
+          auto-activate-base: false
+          use-mamba: true 
 
       - name: Conda Info
         run: |
