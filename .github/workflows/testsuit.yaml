@@ -1,16 +1,14 @@
 name: Tests
 on: [push, pull_request]
 
+  # We only run tests on Ubuntu.
+  # macOS remains in the matrix so that it appears in the CI interface,
+  # but is explicitly skipped because:
+  # 1) macOS runners are much slower and often queue for a long time,
+  # 2) the project does not rely on macOS-specific behavior,
+  # 3) skipping macOS keeps CI fast and avoids unnecessary delays.
 jobs:
   tests:
-    # We only run tests on Ubuntu.
-    # macOS remains in the matrix so that it appears in the CI interface,
-    # but is explicitly skipped because:
-    # 1) macOS runners are much slower and often queue for a long time,
-    # 2) the project does not rely on macOS-specific behavior,
-    # 3) skipping macOS keeps CI fast and avoids unnecessary delays.
-    if: ${{ matrix.os == 'ubuntu-latest' }}
-
     env:
       ENV_NAME: humanSayMonkeyDo
       PYTHON: ${{ matrix.python-version }}
@@ -21,17 +19,22 @@ jobs:
 
     defaults:
       run:
-        # Adding -l {0} helps ensure conda can be found properly.
         shell: bash -l {0}
 
     strategy:
       fail-fast: false
       matrix:
-        # macOS is included for visibility only; it will be skipped by the job-level "if" condition.
+        # macOS remains here for visibility, but steps will skip it.
         os: [macos-latest, ubuntu-latest]
-        python-version: ["3.11","3.13","3.12"]
+        python-version: ["3.11","3.12","3.13"]
 
     steps:
+      - name: Skip macOS runners
+        if: ${{ matrix.os == 'macos-latest' }}
+        run: |
+          echo "Skipping macOS because it is slow and unnecessary for this project."
+          exit 0
+
       - uses: actions/checkout@main
         with:
           fetch-depth: 0
