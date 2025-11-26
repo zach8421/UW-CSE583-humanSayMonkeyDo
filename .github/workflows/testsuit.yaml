@@ -8,14 +8,14 @@ jobs:
     # but is skipped because macOS builds are significantly slower,
     # and the project does not rely on any macOS-specific behavior.
     # This keeps CI fast and avoids long macOS queue/timeout issues.
-    if: runner.os == 'Linux'
+    if: ${{ matrix.os == 'ubuntu-latest' }}
 
     env:
       ENV_NAME: humanSayMonkeyDo
       PYTHON: ${{ matrix.python-version }}
       OS: ${{ matrix.os }}
 
-    name: Testing
+    name: Testing (${{ matrix.os }} / Python ${{ matrix.python-version }})
     runs-on: ${{ matrix.os }}
 
     defaults:
