@@ -24,9 +24,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # macOS remains here for visibility, but steps will skip it.
-        os: [macos-latest, ubuntu-latest]
-        python-version: ["3.11","3.12","3.13"]
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.11", "3.12", "3.13"]
+        exclude:
+          - os: macos-latest
+            python-version: "3.11"
+          - os: macos-latest
+            python-version: "3.12"
+          - os: macos-latest
+            python-version: "3.13"
 
     steps:
       - name: Skip macOS runners
