@@ -3,8 +3,8 @@ requires = ["setuptools>=64.0", "wheel", "setuptools_scm>=8.1"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "CSE583-humanSayMonkeyDo"
-dynamic = ["version"]
+name = "CSE583_humanSayMonkeyDo"
+version = "0.1.0"
 description = "Neural data analysis for motor cortex recordings in macaque and human"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -44,6 +44,9 @@ dependencies = [
     "scipy>=1.7.0",
     "matplotlib>=3.4.0",
     "scikit-learn>=1.0.0",
+    "seaborn>=0.11.0",
+    "pynwb>=2.4.0",
+    "pyyaml>=6.0"
 ]
 
 [project.optional-dependencies]
@@ -85,11 +88,6 @@ package-dir = { "" = "src" }
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["CSE583_humanSayMonkeyDo*"]
-
-[tool.setuptools_scm]
-# You can leave this empty to use defaults, or later customize:
-# version_scheme = "guess-next-dev"
-# local_scheme = "node-and-date"
 
 # Black code formatter configuration
 [tool.black]
