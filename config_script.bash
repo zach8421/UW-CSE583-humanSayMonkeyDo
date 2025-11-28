@@ -5,14 +5,14 @@ cd "$(dirname "$0")" || exit
 check_space() {
     local required_bytes=$1
     local target_path=${2:-.}
-    
+
     local available=$(df --output=avail -B 1 "$target_path" 2>/dev/null | tail -n 1)
-    
+
     # Fallback for macOS
     if [ -z "$available" ]; then
         available=$(df -k "$target_path" | tail -1 | awk '{print $4 * 1024}')
     fi
-    
+
     if [ "$available" -ge "$required_bytes" ]; then
         echo "✓ Sufficient space available: $(numfmt --to=iec $available 2>/dev/null || echo "$((available / 1024 / 1024 / 1024))GB")"
         return 0
@@ -29,7 +29,7 @@ download_dandi_dataset() {
     local subset_filter=$3  # Optional: filter for subset (e.g., "sub-J")
     local full_size_gb=$12   # Size in GB for full dataset
     local dataset_name=${5:-"dataset"}  # Optional: name for display
-    
+
     while true; do
         read -p "Would you like to download the full $dataset_name or a subset? (full/subset): " choice
         if [[ "$choice" == "full" ]]; then
@@ -53,7 +53,7 @@ download_dandi_dataset() {
             if [ -n "$subset_filter" ]; then
                 download_url="https://dandiarchive.org/dandiset/${dataset_id}/${dataset_version}/files?location=${subset_filter}"
                 echo "Downloading from URL: $download_url"
-                dandi download -e REFRESH -f PYOUT --path-type EXACT "$download_url"
+                dandi download -e refresh -f pyout --path-type exact "$download_url"
             else
                 echo "Error: No subset filter defined for this dataset"
                 exit 1
@@ -103,7 +103,7 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate humanSayMonkeyDo
 
 #create file structure
-echo "creating data folder structure" 
+echo "creating data folder structure"
 mkdir -p data/monkey
 mkdir -p data/human
 
