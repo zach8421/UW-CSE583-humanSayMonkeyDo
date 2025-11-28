@@ -520,6 +520,7 @@ def plot_lda_results(results):
     
     plt.tight_layout()
     plt.show()
+    return fig
 
 def say_hello(name: str) -> str:
     """Return a friendly greeting for the provided name."""

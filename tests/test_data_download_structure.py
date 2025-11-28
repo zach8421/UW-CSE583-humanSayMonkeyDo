@@ -1,12 +1,21 @@
 import os
 from pathlib import Path
+import pytest
+
 def test_data_download_structure():
     project_root = Path(__file__).parent.parent
+    data_dir = project_root / "data"
 
-    expected_dirs = [project_root/"data"]
-    expected_dirs.append(expected_dirs[0] / "human")
-    expected_dirs.append(expected_dirs[0] / "monkey")
-    expected_dirs.append(expected_dirs[2]/ "sub-J")
+    # Skip test when running in CI without data directory
+    if not data_dir.exists():
+        pytest.skip("Skipping data structure test: data directory not available in CI.")
+
+    expected_dirs = [
+        data_dir,
+        data_dir / "human",
+        data_dir / "monkey",
+        data_dir / "monkey" / "sub-J",
+    ]
 
     
     for dir_path in expected_dirs:
