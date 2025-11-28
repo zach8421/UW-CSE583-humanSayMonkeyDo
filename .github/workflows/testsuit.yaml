@@ -16,8 +16,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest]  # it's a great idea to also include: macos-latest, windows-latest
-        python-version: ["3.11","3.13","3.12"]  # it's a great idea to also include: "3.11", "3.13"
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.11","3.12","3.13"]
     steps:
       - uses: actions/checkout@main
         with:
@@ -37,7 +37,9 @@ jobs:
           conda info -a
           conda list
           PYVER=`python -c "import sys; print('{:d}.{:d}'.format(sys.version_info.major, sys.version_info.minor))"`
+          echo "Detected Python: $PYVER  Expected: ${PYTHON}"
           if [[ $PYVER != ${{ env.PYTHON }} ]]; then
+            echo "Python version mismatch"
             exit 1;
           fi
 
