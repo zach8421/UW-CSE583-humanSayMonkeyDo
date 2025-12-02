@@ -24,7 +24,7 @@ def test_get_pos_chunk_basic(fake_hdf):
 
 def test_get_pos_chunk_mismatched_inputs(fake_hdf):
     """start_times and end_times lengths must match."""
-    with pytest.raises(AssertionError):
+    with pytest.raises(ValueError, match="start_times and end_times must have the same length"):
         get_pos_chunk(fake_hdf, [0.1], [0.2, 0.3])
 
 
