@@ -25,8 +25,10 @@ def test_get_nwbs_max_subjects(data_paths):
         nwbs_one = get_nwbs('monkey', max_subjects=1)
         assert len(nwbs_one) == 1
 
-
 def test_get_nwbs_primate_options():
-    """primate must be 'monkey' or 'human'."""
-    with pytest.raises(AssertionError):
-        get_nwbs('dog')
+    """
+    Edge test to make sure the function throws a ValueError
+    when the input primate is not monkey or human.
+    """
+    with pytest.raises(ValueError, match="primate must be 'monkey' or 'human'"):
+        get_nwbs(primate="gorilla")
