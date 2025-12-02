@@ -1,6 +1,5 @@
 import pytest
 from pathlib import Path
-import yaml
 
 # Adjust the import based on your actual structure
 from src.CSE583_humanSayMonkeyDo.load_config import load_config, get_config_value, get_data_paths
