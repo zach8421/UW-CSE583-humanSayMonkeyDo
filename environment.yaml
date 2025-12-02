@@ -17,5 +17,7 @@ dependencies:
   - pynwb
   - pip
   - pytest
+  - pytest-cov
+  - ruff
   - pip:
     - dandi
