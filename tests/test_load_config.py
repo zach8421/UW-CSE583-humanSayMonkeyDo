@@ -7,7 +7,6 @@ from src.CSE583_humanSayMonkeyDo.load_config import load_config, get_config_valu
 
 
 @pytest.fixture
-
 def config_file_path():
     """Get the path to the actual config.yaml file."""
     # Assuming tests are run from project root
@@ -17,39 +16,39 @@ def config_file_path():
         config_path = Path(__file__).parent.parent / 'config.yaml'
     return config_path
 
-def test_load_config_smoke():
+def test_load_config_smoke(config_file_path):
     """Smoke test for load_config function.
     author: ajm
     reviewer: 
     category: smoke test"""
-    config_path = config_file_path()
 
-    assert config_path is not None, "config path returned None"
-    assert config_path.exists(), f"Config file does not exist at {config_path}"
+    assert config_file_path is not None, "config path returned None"
+    assert config_file_path.exists(), f"Config file does not exist at {config_file_path}"
 
-def test_load_config_one_shot():
+def test_load_config_one_shot(config_file_path):
     """One-shot test for load_config function.
     author: ajm
     reviewer: 
     category: one shot test
     """
-    config_path = config_file_path()
-    config = load_config(config_path)
+    config = load_config(config_file_path)
 
     assert isinstance(config, dict), "Config is not a dictionary"
     assert 'project_name' in config, "Missing 'project_name' in config"
     assert config['project_name'] == 'humanSayMonkeyDo', "Incorrect 'project_name' value"
 
-def test_load_config_edge_case_empty_file(tmp_path):
-    """Edge case test for load_config with an empty file.
+def test_load_config_edge_case_empty_file():
+    """Edge case test for load_config with an empty file. It should load nothing
     author: ajm
     reviewer: 
     category: edge case test"""
-    empty_config_path = tmp_path / 'empty_config.yaml'
+    empty_config_path = Path.cwd() / 'empty_config.yaml'
     empty_config_path.touch()  # Create an empty file
-
+    
     config = load_config(empty_config_path)
-    assert config == {}, "Expected empty dictionary for empty config file"
+    print(config)
+    assert config is None, "Config should be None for empty file"
+    empty_config_path.unlink()  # Clean up the file
 
 
 def test_get_data_paths_returns_path_objects_pattern(config_file_path):
