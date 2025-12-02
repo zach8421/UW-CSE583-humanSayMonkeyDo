@@ -1,5 +1,5 @@
 """Example core module with placeholder functionality."""
-from CSE583_humanSayMonkeyDo.load_config import load_config, get_config_value, get_data_paths
+from CSE583_humanSayMonkeyDo.load_config import get_data_paths
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -7,10 +7,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 import seaborn as sns
 
 
-import os
-from pathlib import Path
 import numpy as np
-from pynwb import read_nwb
 from matplotlib import pyplot as plt
 
 def get_nwbs(primate='monkey', max_subjects=None) -> list:
@@ -23,13 +20,13 @@ def get_nwbs(primate='monkey', max_subjects=None) -> list:
         list: a list of Path objects.
     """
     if primate not in ("monkey", "human"):
-        raise ValueError(f"primate must be 'monkey' or 'human'")
+        raise ValueError("primate must be 'monkey' or 'human'")
 
     if max_subjects is not None:
         if not isinstance(max_subjects, int):
-            raise TypeError(f"max_subjects must be an integer")
+            raise TypeError("max_subjects must be an integer")
         if max_subjects <= 0:
-            raise ValueError(f"max_subjects must be a positive integer")
+            raise ValueError("max_subjects must be a positive integer")
 
     data_paths = get_data_paths()
     nwb = list(data_paths[primate].glob("**/*.nwb"))
