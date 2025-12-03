@@ -1,6 +1,5 @@
 import pytest
 from pathlib import Path
-import yaml
 
 # Adjust the import based on your actual structure
 from src.CSE583_humanSayMonkeyDo.load_config import load_config, get_config_value, get_data_paths
@@ -16,6 +15,54 @@ def config_file_path():
         config_path = Path(__file__).parent.parent / 'config.yaml'
     return config_path
 
+def test_load_config_smoke(config_file_path):
+    """Smoke test for load_config function.
+    author: ajm
+    reviewer: 
+    category: smoke test"""
+
+    assert config_file_path is not None, "config path returned None"
+    assert config_file_path.exists(), f"Config file does not exist at {config_file_path}"
+
+def test_load_config_one_shot(config_file_path):
+    """One-shot test for load_config function.
+    author: ajm
+    reviewer: 
+    category: one shot test
+    """
+    config = load_config(config_file_path)
+
+    assert isinstance(config, dict), "Config is not a dictionary"
+    assert 'project_name' in config, "Missing 'project_name' in config"
+    assert config['project_name'] == 'humanSayMonkeyDo', "Incorrect 'project_name' value"
+
+def test_load_config_edge_case_empty_file():
+    """Edge case test for load_config with an empty file. It should load nothing
+    author: ajm
+    reviewer: 
+    category: edge case test"""
+    empty_config_path = Path.cwd() / 'empty_config.yaml'
+    empty_config_path.touch()  # Create an empty file
+    
+    config = load_config(empty_config_path)
+    print(config)
+    assert config is None, "Config should be None for empty file"
+    empty_config_path.unlink()  # Clean up the file
+
+
+def test_get_data_paths_returns_path_objects_pattern(config_file_path):
+    """Test that get_data_paths returns Path objects.
+    author: ajm
+    reviewer: 
+    category: pattern test
+    """
+    project_root = Path.cwd()
+    paths = get_data_paths(project_root=project_root, config_file=config_file_path)
+    for key in ['root', 'monkey', 'human']:
+        assert key in paths, f"Missing key '{key}' in returned paths"
+
+    assert isinstance(paths['monkey_subjects'], list)
+    assert all(isinstance(p, Path) for p in paths['monkey_subjects'])
 
 def test_config_file_exists(config_file_path):
     """Test that config.yaml file exists."""
@@ -83,18 +130,6 @@ def test_get_config_value_invalid_key(config_file_path):
     """Test that invalid keys raise KeyError."""
     with pytest.raises(KeyError):
         get_config_value('nonexistent.key', config_file_path)
-
-
-def test_get_data_paths_returns_path_objects(config_file_path):
-    """Test that get_data_paths returns Path objects."""
-    project_root = Path.cwd()
-    paths = get_data_paths(project_root=project_root, config_file=config_file_path)
-    
-    assert isinstance(paths['root'], Path)
-    assert isinstance(paths['monkey'], Path)
-    assert isinstance(paths['human'], Path)
-    assert isinstance(paths['monkey_subjects'], list)
-    assert all(isinstance(p, Path) for p in paths['monkey_subjects'])
 
 
 def test_get_data_paths_correct_structure(config_file_path):

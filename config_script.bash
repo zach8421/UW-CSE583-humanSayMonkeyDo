@@ -77,14 +77,27 @@ else
     exit 1
 fi
 
-#check if they have already initialized the appropriate environment
-if conda env list | grep -q "^humanSayMonkeyDo "; then
-    echo "Environment 'humanSayMonkeyDo' already exists, continuing to data"
-else
-    echo "Environment does not exist, initializing conda environment"
+# verify environment.yaml exists
+if [[ ! -f "environment.yaml" ]]; then
+    echo "Error: environment.yaml not found in current directory $(pwd)"
+    exit 1
+fi
 
-    #check that we are usign the correct environment file
-    if [[ -f "environment.yaml" ]] && head -n 1 environment.yaml | grep -q "humanSayMonkeyDo"; then
+# check if the environment already exists
+if conda env list | grep -q "^humanSayMonkeyDo "; then
+    echo "Environment 'humanSayMonkeyDo' already exists"
+    echo "Updating environment from environment.yaml..."
+    if conda env update -n humanSayMonkeyDo -f environment.yaml --prune; then
+        echo "Environment successfully updated"
+    else
+        echo "Error: Failed to update environment"
+        exit 1
+    fi
+else
+    echo "Environment does not exist, initializing environment"
+
+    #  verify using the correct environment.yaml
+    if head -n 1 environment.yaml | grep -q "humanSayMonkeyDo"; then
         echo "Identified correct environment file, creating environment..."
         if conda env create -f environment.yaml; then
             echo "Environment successfully created"
@@ -93,7 +106,7 @@ else
             exit 1
         fi
     else
-        echo "Unable to identify correct environment file. Ensure that current folder is in the main humanSayMonkeyDo folder..."
+        echo "Unable to identify correct environment file. Ensure this folder contains the proper environment.yaml"
     fi
 fi
 
