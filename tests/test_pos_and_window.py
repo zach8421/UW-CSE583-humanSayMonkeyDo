@@ -25,17 +25,21 @@ def test_get_pos_chunk_basic(fake_hdf):
 def test_get_pos_chunk_smoke(fake_hdf):
     """
     author: Yi Ding
-    reviewer:
+    reviewer:Yici Chen
     category: smoke test
     """
     chunks = get_pos_chunk(fake_hdf, [0.2], [0.4])
     assert isinstance(chunks, list)
     assert len(chunks) == 1
 
+    chunk = chunks[0]
+    assert chunk.size > 0
+    assert chunk.shape[1] == fake_hdf.data.shape[1]
+
 def test_get_pos_chunk_one_shot():
     """
     author: Yi Ding
-    reviewer:
+    reviewer:Yici Chen
     category: one shot test
     """
     timestamps = np.array([0.0, 0.1, 0.2, 0.3, 0.4])
@@ -54,7 +58,7 @@ def test_get_pos_chunk_one_shot():
 def test_get_pos_chunk_mismatched_inputs(fake_hdf):
     """
     author: Yi Ding
-    reviewer:
+    reviewer:Yici Chen
     category: edge test
     """
     with pytest.raises(ValueError, match="start_times and end_times must have the same length"):
@@ -64,7 +68,7 @@ def test_get_pos_chunk_mismatched_inputs(fake_hdf):
 def test_get_pos_chunk_sorting(fake_hdf):
     """
     author: Yi Ding
-    reviewer:
+    reviewer:Yici Chen
     category: pattern test (maybe not quite fit
         because the function is not a simple math representation)
     """
