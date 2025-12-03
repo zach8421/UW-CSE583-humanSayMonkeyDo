@@ -7,7 +7,7 @@ from CSE583_humanSayMonkeyDo.core import get_chunk_spikes
 def test_yici_smoke_get_chunk_spikes():
     """
     author: Yici
-    reviewer: AJ
+    reviewer: Yi
     category: smoke test
     note: This test simply checks that the function runs without errors and returns an object of the expected outer structure.
     """
@@ -27,7 +27,7 @@ def test_yici_smoke_get_chunk_spikes():
 def test_yici_one_shot_get_chunk_spikes():
     """
     author: Yici
-    reviewer: AJ
+    reviewer: Yi
     category: one-shot test
     note: This test uses a fixed and simple input to check whether the returned spikes match the expected exact values.
     """
@@ -53,7 +53,7 @@ def test_yici_one_shot_get_chunk_spikes():
 def test_yici_edge_get_chunk_spikes_empty_unit():
     """
     author: Yici
-    reviewer: AJ
+    reviewer: Yi
     category: edge test
     note: This test checks how the function behaves when one of the units contains no spikes at all. The output should still include an empty array for that unit.
     """
@@ -65,18 +65,28 @@ def test_yici_edge_get_chunk_spikes_empty_unit():
     end_times = [1.0]
 
     result = get_chunk_spikes(list_units, start_times, end_times)
+    
+    # Structure checks
+    assert isinstance(result, list)
+    assert len(result) == 1                 # one chunk
+    assert len(result[0]) == 2              # two units
 
-    # The empty unit stays empty
+    # Empty unit stays empty
+    assert isinstance(result[0][0], np.ndarray)
     assert result[0][0].size == 0
 
-    # The non-empty unit should return all spikes
-    assert np.array_equal(result[0][1], np.array([0.2, 0.4]))
+    # Non empty unit keeps all spikes in range
+    expected = np.array([0.2, 0.4])
+    assert np.array_equal(result[0][1], expected)
+
+    # Shape check
+    assert result[0][1].ndim == 1
 
 
 def test_yici_pattern_get_chunk_spikes_structure():
     """
     author: Yici
-    reviewer: AJ
+    reviewer: Yi
     category: pattern test
     note: This test checks for consistent structural patterns in the output when multiple chunks and units are involved. It does not require exact numerical matching beyond simple patterns.
     """
@@ -89,11 +99,23 @@ def test_yici_pattern_get_chunk_spikes_structure():
 
     result = get_chunk_spikes(list_units, start_times, end_times)
 
-    # Check chunk and unit structure
-    assert len(result) == 2              
-    assert len(result[0]) == 2           
-    assert len(result[1]) == 2
+    # Structure checks
+    assert isinstance(result, list)
+    assert len(result) == 2                         # two chunks
+    assert all(isinstance(chunk, list) for chunk in result)
+    assert all(len(chunk) == 2 for chunk in result) # two units in each chunk
 
-    # Spikes in expected time ranges
+    # Pattern checks
+    # Chunk 0 should contain only early spikes
     assert np.array_equal(result[0][0], np.array([0.1]))
+    assert np.array_equal(result[0][1], np.array([0.2]))
+
+    # Chunk 1 should contain later spikes
     assert np.array_equal(result[1][0], np.array([0.5, 1.0]))
+    assert np.array_equal(result[1][1], np.array([0.6]))
+
+    # Shape consistency
+    assert result[0][0].ndim == 1
+    assert result[0][1].ndim == 1
+    assert result[1][0].ndim == 1
+    assert result[1][1].ndim == 1

@@ -68,7 +68,7 @@ jobs:
 
       - name: Run Tests
         run: |
-          python -m pytest
+          python -m pytest --cov=humanSayMonkeyDo --cov-report=term-missing
 
       - name: Lint with Ruff
         run : ruff check
