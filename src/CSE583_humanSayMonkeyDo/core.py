@@ -373,7 +373,8 @@ def get_movement_onset_times(velocity_dataset, go_cue_times, threshold=5.0,
     start_indices = np.searchsorted(timestamps, go_cue_times, side='left')
     
     # Calculate window start offset in indices
-    window_start_offset = abs(int(window[0] / np.median(np.diff(timestamps))))
+    window_start_offset = int(window[0] / np.median(np.diff(timestamps)))
+    assert window_start_offset > 0, "window_start_offset must be positive"
     
     # Adjust for window offset
     movement_onset_indices = start_indices + window_start_offset + first_idx
