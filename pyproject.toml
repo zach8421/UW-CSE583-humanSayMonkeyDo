@@ -174,3 +174,8 @@ exclude_lines = [
     "@(abc\\.)?abstractmethod",
 ]
 
+[tool.ruff]
+exclude = [
+    "examples",
+]
+line-length = 88
