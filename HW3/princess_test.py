@@ -14,7 +14,7 @@ def fake_hdf():
 def test_princess_correct_structure_get_movement_onset():
     """
     author: Princess
-    reviewer:
+    reviewer: Autumn
     category: pattern test
     note: This test makes sure that velocity dataset has all the correct components
     """
@@ -32,9 +32,9 @@ def test_princess_correct_structure_get_movement_onset():
 def test_princess_smoke_get_movement_onset():
     """
     author: Princess
-    reviewer:
+    reviewer: Autumn
     category: Smoke test
-    note: 
+    note: evaluates get_movement_onset_times on fake dataset by checking output
     """
 
     # minimal valid input - HDF5-like dataset and go_cue array
@@ -49,7 +49,7 @@ def test_princess_smoke_get_movement_onset():
 def test_princess_one_shot_get_movement_onset():
     """
     author: Princess
-    reviewer:
+    reviewer: Autumn
     category: One-shot test
     note: This test checks for a correct number of onsets and that the velocity matches the set threshold value
     """
@@ -72,7 +72,7 @@ def test_princess_one_shot_get_movement_onset():
 def test_princess_edge_get_movement_onset():
     """
     author: Princess
-    reviewer:
+    reviewer: Autumn
     category: Edge test
     note: This test checks how the function deals with very low velocity thresholds
         The calculation is limited by the size of size of the window and will calculate velocity incorrectly.
