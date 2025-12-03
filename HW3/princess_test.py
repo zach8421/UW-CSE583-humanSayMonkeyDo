@@ -2,7 +2,6 @@
 
 from CSE583_humanSayMonkeyDo.core import get_movement_onset_times
 import numpy as np
-import pandas as pd
 from types import SimpleNamespace
 
 def fake_hdf():
