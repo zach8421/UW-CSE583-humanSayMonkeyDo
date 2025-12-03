@@ -1,5 +1,5 @@
 """Example core module with placeholder functionality."""
-from CSE583_humanSayMonkeyDo.load_config import get_data_paths
+from src.CSE583_humanSayMonkeyDo.load_config import load_config, get_config_value, get_data_paths
 
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import train_test_split, cross_val_score
@@ -397,8 +397,8 @@ def get_movement_onset_times(velocity_dataset, go_cue_times, threshold=5.0,
     start_indices = np.searchsorted(timestamps, go_cue_times, side='left')
 
     # Calculate window start offset in indices
-    window_start_offset = int(window[0] / np.median(np.diff(timestamps)))
-
+    window_start_offset = abs(int(window[0] / np.median(np.diff(timestamps))))
+    
     # Adjust for window offset
     movement_onset_indices = start_indices + window_start_offset + first_idx
 
