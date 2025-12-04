@@ -35,56 +35,109 @@ def get_nwbs(primate='monkey', max_subjects=None) -> list:
 
     return nwb
 
-def get_pos_chunk(hdf_dataset, start_times, end_times) -> list:
-    """Extract chunks of data from an HDF5 dataset based on start and end times.
-
-    Args:
-        hdf_dataset: HDF5 dataset object with time-indexed data.
-        start_times (list): List of start times for each chunk.
-        end_times (list): List of end times for each chunk.
-
-    Returns:
-        list: List of numpy arrays containing the extracted data chunks.
+def get_pos_chunk(timestamps, kinematics, start_times, end_times) -> list:
     """
-    if hdf_dataset is None:
-        raise ValueError("hdf_dataset cannot be None")
-
-    if not hasattr(hdf_dataset, "timestamps"):
-        raise AttributeError("hdf_dataset must have a 'timestamps' attribute")
-    if not hasattr(hdf_dataset, "data"):
-        raise AttributeError("hdf_dataset must have a 'data' attribute")
-
+    Extract chunks of kinematic data based on start and end times.
+    
+    This function extracts segments of kinematic data that fall within
+    specified time windows. It efficiently handles multiple time windows
+    by sorting and using vectorized operations.
+    
+    Parameters
+    ----------
+    timestamps : array-like
+        1D array of timestamps corresponding to kinematic samples.
+    kinematics : array-like
+        Kinematic data array. Can be either:
+        - 1D array of shape (n_samples,) for scalar kinematics
+        - 2D array of shape (n_samples, n_features) for multi-dimensional kinematics
+        Must have the same length as timestamps along the first dimension.
+    start_times : array-like
+        Array of start times for each chunk to extract.
+    end_times : array-like
+        Array of end times for each chunk to extract.
+        Must have the same length as start_times.
+    
+    Returns
+    -------
+    list of numpy.ndarray
+        List of extracted kinematic data chunks. Each chunk corresponds to
+        data within one [start_time, end_time) interval. Empty chunks are
+        returned as empty arrays when no data falls within the time window.
+    
+    Raises
+    ------
+    ValueError
+        If timestamps is None or empty.
+        If kinematics is None or empty.
+        If start_times and end_times have different lengths.
+        If timestamps and kinematics have different lengths along first dimension.
+    
+    Examples
+    --------
+    >>> timestamps = np.array([0, 1, 2, 3, 4, 5])
+    >>> kinematics = np.array([10, 20, 30, 40, 50, 60])
+    >>> start_times = [1, 3.5]
+    >>> end_times = [3, 5]
+    >>> chunks = get_pos_chunk(timestamps, kinematics, start_times, end_times)
+    >>> print(chunks[0])  # Data from time 1 to 3
+    [20 30]
+    >>> print(chunks[1])  # Data from time 3.5 to 5
+    [40 50]
+    
+    Notes
+    -----
+    The function uses binary search (np.searchsorted) for efficient lookup.
+    Start times use 'left' side (inclusive) and end times use 'right' side
+    (exclusive), so intervals are [start_time, end_time).
+    Chunks are returned in the sorted order of start_times.
+    """
+    # Validate inputs
+    if timestamps is None or len(timestamps) == 0:
+        raise ValueError("timestamps cannot be None or empty")
+    if kinematics is None or len(kinematics) == 0:
+        raise ValueError("kinematics cannot be None or empty")
     if len(start_times) != len(end_times):
         raise ValueError("start_times and end_times must have the same length")
-
+    
     # Convert to numpy arrays once
+    timestamps = np.asarray(timestamps)
+    kinematics = np.asarray(kinematics)
     start_times = np.asarray(start_times)
     end_times = np.asarray(end_times)
-
+    
+    # Validate that timestamps and kinematics have matching lengths
+    if len(timestamps) != len(kinematics):
+        raise ValueError(
+            f"timestamps and kinematics must have the same length, "
+            f"got {len(timestamps)} and {len(kinematics)}"
+        )
+    
     # Sort by start times for efficient sequential access
     sort_idx = np.argsort(start_times)
     sorted_start_times = start_times[sort_idx]
     sorted_end_times = end_times[sort_idx]
-
-    # Get timestamps once (avoid repeated attribute access)
-    timestamps = hdf_dataset.timestamps[:]
-
+    
     # Vectorized searchsorted for all start/end times at once
     start_indices = np.searchsorted(timestamps, sorted_start_times, side='left')
     end_indices = np.searchsorted(timestamps, sorted_end_times, side='right')
-
+    
     # Extract chunks
     chunks = []
     for start_idx, end_idx in zip(start_indices, end_indices):
         if start_idx < end_idx:  # Only add non-empty chunks
-            chunk = hdf_dataset.data[start_idx:end_idx, :]
+            chunk = kinematics[start_idx:end_idx]
             chunks.append(chunk)
         else:
-            chunks.append(np.array([]))  # Empty chunk
-
+            # Return empty array with appropriate shape
+            if kinematics.ndim == 1:
+                chunks.append(np.array([]))
+            else:
+                chunks.append(np.empty((0, kinematics.shape[1])))
+    
     return chunks
 
-def get_windowed_pos_chunk(hdf_dataset, center_times, window_size) -> list:
+def get_windowed_pos_chunk(kinematics, timestamps, center_times, window_size) -> list:
     """Extract windowed chunks of data from an HDF5 dataset based on center times and window size.
 
     Args:
@@ -105,7 +158,7 @@ def get_windowed_pos_chunk(hdf_dataset, center_times, window_size) -> list:
     start_times = center_times - before
     end_times = center_times + after
 
-    return get_pos_chunk(hdf_dataset, start_times, end_times)
+    return get_pos_chunk(timestamps, kinematics, start_times, end_times)
 
 
 def get_chunk_spikes(list_units_spkts, start_times, end_times, return_format='list'):
