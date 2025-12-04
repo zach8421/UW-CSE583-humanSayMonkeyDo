@@ -347,7 +347,7 @@ def plot_firing_rate_heatmap(firing_rates_2d, time_axis=None, bin_size=None,
                    vmin=vmin, vmax=vmax)
 
     # Add colorbar
-    cbar = plt.colorbar(im, ax=ax, label=rate_label)
+    plt.colorbar(im, ax=ax, label=rate_label)
 
     # Labels and title
     ax.set_xlabel(xlabel, fontsize=12)
