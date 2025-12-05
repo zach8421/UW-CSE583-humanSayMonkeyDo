@@ -1,6 +1,6 @@
 # tests/test_lda.py
 import numpy as np
-from src.CSE583_humanSayMonkeyDo.core import train_lda_classifier
+from src.CSE583_humanSayMonkeyDo.analysis import train_lda_classifier
 
 
 def test_train_lda_classifier_smoke():

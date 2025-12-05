@@ -1,8 +1,9 @@
 # tests/test_get_nwbs.py
 import pytest
 from pathlib import Path
+
 from src.CSE583_humanSayMonkeyDo.load_config import get_data_paths
-from src.CSE583_humanSayMonkeyDo.core import get_nwbs
+from src.CSE583_humanSayMonkeyDo.data_loading import get_nwbs
 
 
 @pytest.fixture
