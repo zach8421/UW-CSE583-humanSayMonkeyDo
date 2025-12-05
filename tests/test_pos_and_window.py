@@ -2,7 +2,10 @@
 import numpy as np
 import pytest
 from types import SimpleNamespace
-from src.CSE583_humanSayMonkeyDo.core import get_pos_chunk, get_windowed_pos_chunk
+from src.CSE583_humanSayMonkeyDo.extractors import (
+    get_pos_chunk,
+    get_windowed_pos_chunk
+)
 
 
 @pytest.fixture
