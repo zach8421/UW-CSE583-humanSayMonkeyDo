@@ -414,7 +414,7 @@ def plot_firing_rate_heatmap(firing_rates_2d, time_axis=None, bin_size=None,
     return fig, ax
 
 
-def get_movement_onset_times(velocity_dataset, go_cue_times, threshold=5.0,
+def get_movement_onset_times(velocity, timestamps, go_cue_times, threshold=5.0,
                              window=[-0.1, 1.0]):
     """Find movement onset times when velocity exceeds threshold after go cues.
 
@@ -429,7 +429,7 @@ def get_movement_onset_times(velocity_dataset, go_cue_times, threshold=5.0,
         movement_onset_indices (array): Indices into velocity_dataset where movement starts
     """
     # Get velocity chunks around go cues
-    cursor_moving = get_windowed_pos_chunk(velocity_dataset, go_cue_times, window)
+    cursor_moving = get_windowed_pos_chunk(velocity, timestamps, go_cue_times, window)
 
     # Find first index exceeding threshold for each trial
     first_idx = []
@@ -446,7 +446,6 @@ def get_movement_onset_times(velocity_dataset, go_cue_times, threshold=5.0,
     first_idx = np.array(first_idx)
 
     # Convert to absolute timestamps
-    timestamps = velocity_dataset.timestamps[:]
     start_indices = np.searchsorted(timestamps, go_cue_times, side='left')
 
     # Calculate window start offset in indices
