@@ -75,7 +75,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, classification_rep
 
 # Local module imports
 # Replace 'your_module_name' with the actual name of your local module
-from data_formatting import get_windowed_pos_chunk
+from CSE583_humanSayMonkeyDo.data_formatting import get_windowed_pos_chunk
 
 def get_movement_onset_times(velocity, timestamps, go_cue_times, threshold=5.0,
                              window=[-0.1, 1.0]):

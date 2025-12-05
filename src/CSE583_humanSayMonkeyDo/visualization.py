@@ -96,6 +96,7 @@ from matplotlib import pyplot as plt
 # Machine learning metrics import
 # The confusion_matrix function is needed for plot_lda_results
 from sklearn.metrics import confusion_matrix
+import seaborn as sns
 
 def plot_firing_rate_heatmap(firing_rates_2d, time_axis=None, bin_size=None,
                               figsize=(12, 8), cmap='viridis',
