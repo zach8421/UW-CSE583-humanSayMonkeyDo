@@ -1,6 +1,9 @@
 # tests/test_plotting.py
 import numpy as np
-from src.CSE583_humanSayMonkeyDo.core import plot_firing_rate_heatmap, plot_lda_results
+from src.CSE583_humanSayMonkeyDo.plotting import (
+    plot_firing_rate_heatmap,
+    plot_lda_results
+)
 
 
 def test_plot_firing_rate_heatmap_smoke():
