@@ -75,8 +75,6 @@ This does not reduce generalizability, because the workflow depends on NWB schem
 - Serves as the primary dataset for building the movement-onset decoding pipeline  
 - Provides the structures needed for event alignment, feature construction, and classifier training/testing  
 
----
-
 ### 3.2 Human dataset (used to assess extensibility)
 
 - **Dataset:** DANDI:000019  
@@ -91,8 +89,6 @@ This does not reduce generalizability, because the workflow depends on NWB schem
 **Usage**
  
 - Used to evaluate how well the pipeline design may generalize to different NWB modalities  
-
----
 
 ### 3.3 Subset selection and generalizability
 
@@ -109,8 +105,6 @@ Additional NWB sessions can be analyzed simply by supplying a new file path.
 ## 4. Use Cases
 
 Use cases are framed for the primary users: neuroscientists who want to analyze neural–behavioral datasets without writing low-level code.
-
----
 
 ### Use Case 1: Load and inspect available NWB files
 
@@ -130,8 +124,6 @@ Enable neuroscientists to identify which NWB files are available for analysis an
 
 **Outcome**  
 Neuroscientists obtain a clean list of available NWB files and select which session to analyze next.
-
----
 
 ### Use Case 2: Extract neural or behavioral chunks aligned to events
 
@@ -154,8 +146,6 @@ Allow neuroscientists to extract trial-aligned segments of velocity traces or sp
 **Outcome**  
 Neuroscientists receive structured, trial-aligned neural or behavioral data that can be directly used for decoding.
 
----
-
 ### Use Case 3: Detect movement onset from velocity signals
 
 **Objective**  
@@ -176,8 +166,6 @@ Enable neuroscientists to automatically detect movement-onset timestamps after t
 
 **Outcome**  
 Reliable movement-onset labels are generated for use in downstream classifier training.
-
----
 
 ### Use Case 4: Train and visualize a movement-onset classifier
 
@@ -204,8 +192,6 @@ Allow neuroscientists to evaluate whether neural population activity predicts mo
 **Outcome**  
 Neuroscientists obtain decoding metrics and clear visualizations summarizing classifier performance.
 
----
-
 ### Use Case 5: Apply the pipeline to a new session
 
 **Objective**  
@@ -231,8 +217,6 @@ Enable neuroscientists to reuse the entire preprocessing and decoding pipeline o
 
 **Outcome**  
 Neuroscientists can reuse the workflow across multiple recording sessions without modifying the pipeline, ensuring consistency and facilitating cross-session comparisons.
-
----
 
 ### Use Case 6: Visualize neural population activity or decoding results
 
