@@ -1,7 +1,7 @@
 # test get_chunk_spikes
 
 import numpy as np
-from src.CSE583_humanSayMonkeyDo.extractors import get_chunk_spikes
+from src.CSE583_humanSayMonkeyDo.data_formatting import get_chunk_spikes
 
 
 def test_yici_smoke_get_chunk_spikes():
