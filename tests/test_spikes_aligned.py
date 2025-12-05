@@ -1,6 +1,6 @@
 # tests/test_spikes_aligned.py
 import numpy as np
-from src.CSE583_humanSayMonkeyDo.extractors import get_chunk_spikes_aligned
+from src.CSE583_humanSayMonkeyDo.data_formatting import get_chunk_spikes_aligned
 
 
 def test_chunk_spikes_aligned_basic():
