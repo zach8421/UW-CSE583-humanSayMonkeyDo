@@ -1,6 +1,6 @@
 # tests/test_spikes.py
 import numpy as np
-from src.CSE583_humanSayMonkeyDo.core import get_chunk_spikes
+from src.CSE583_humanSayMonkeyDo.extractors import get_chunk_spikes
 
 
 def test_get_chunk_spikes_list_format():
