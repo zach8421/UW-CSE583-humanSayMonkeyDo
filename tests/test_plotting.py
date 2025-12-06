@@ -1,6 +1,6 @@
 # tests/test_plotting.py
 import numpy as np
-from CSE583_humanSayMonkeyDo.visualization import (
+from cse583_human_say_monkey_do.visualization import (
     plot_firing_rate_heatmap,
     plot_lda_results
 )
