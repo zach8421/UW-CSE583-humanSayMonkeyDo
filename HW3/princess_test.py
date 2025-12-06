@@ -1,6 +1,6 @@
 """Tests for get_movement_onset_times function"""
 
-from CSE583_humanSayMonkeyDo.core import get_movement_onset_times
+from cse583_human_say_monkey_do.core import get_movement_onset_times
 import numpy as np
 from types import SimpleNamespace
 

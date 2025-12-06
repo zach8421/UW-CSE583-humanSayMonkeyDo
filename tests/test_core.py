@@ -1,6 +1,6 @@
 """Basic tests for the core module."""
 
-from CSE583_humanSayMonkeyDo.core import say_hello
+from cse583_human_say_monkey_do.core import say_hello
 
 
 def test_say_hello_returns_greeting():

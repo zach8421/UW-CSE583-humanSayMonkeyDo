@@ -2,7 +2,7 @@ import pytest
 from pathlib import Path
 
 # Adjust the import based on your actual structure
-from src.CSE583_humanSayMonkeyDo.load_config import load_config, get_config_value, get_data_paths
+from src.cse583_human_say_monkey_do.load_config import load_config, get_config_value, get_data_paths
 
 
 @pytest.fixture

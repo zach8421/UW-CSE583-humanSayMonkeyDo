@@ -9,7 +9,7 @@ Test file containing examples of different test types:
 import pytest
 import numpy as np
 from pathlib import Path
-from CSE583_humanSayMonkeyDo.core import (
+from cse583_human_say_monkey_do.core import (
     say_hello,
     get_nwbs,
     get_windowed_pos_chunk
