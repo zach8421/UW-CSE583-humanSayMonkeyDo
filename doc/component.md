@@ -14,20 +14,75 @@
     -   Preliminary plan. A list of tasks in priority order.
 
 
-### Software Components:
+## Software Components:
 
-1. Database
-    - What it does: Gives you neural and kinematic data 
-    - Inputs: Subject, trial, trial type
-    - Matrix that is Timestamps X Trials
-2. Analysis
-    - What it does: Applies standard analysis to neural/kinematic data
-    - Inputs: Analysis specification, data matrix
-    - Output: Data structure with analysis outputs and data
-3. Visualization
-    - What it does: Visualize the analysis results
-    - Inputs: Analysis data structure
-    - Output: Graph showing analysis results
+1. NWB Loader 
+    What it does: 
+        - Loads in neural and kinematic data for a NWB data file
+    Inputs (with type information): 
+        - NWB file path
+        - Primate (str) - specify which data type to load in
+    Outputs (with type information):
+        - Data file (NWBFile Object)
+        - Trial time in seconds (numpy.ndarray)
+        - Time of go cues (numpy.ndarray)
+    Components used:
+
+2. Trial Chunker
+    What it does:
+        - Chunks the neural activity and kinematic datasets into equal sized trials at a given time window
+    Inputs: 
+        - Trial time in seconds (numpy.ndarray)
+        - Time of go cues (numpy.ndarray)
+    Outputs: 
+        - All trial chunks (list)
+        - 2D position during each trial (array)
+        - Spiking data of all recording units during trial (array)
+    Components Used: 
+        - NWB Loader
+
+3. Visualization Manager
+    What it does: 
+        - Displays kinematic and neural data during the duration of a trial. 
+    Inputs: 
+        - Trial Chunks (list) - output from Trial chunker
+        - 2D position during each trial (array)
+        - Spiking data timeseries of all recording units (array)
+    Output: 
+        - Plot of cursor movement in x/y position 
+        - Plot of neural population firing rates of all recording units
+    Components Used: 
+        - NWB Loader
+        - Trial Chunker
+
+4. Movement Detector
+    What it does: 
+        - Uses position timeseries to calculate movement velocity following a go cue. 
+    Inputs: 
+        - Trial chunks (list)
+        - 2D position timeseries during each trial (array)
+        - Spiking data timeseries of all recording units (array)
+        - Speed threshold (int)
+    Outputs: 
+        - Movement times (array)
+        - Movement velocity (array)
+        - Spike data during stationary and movement periods (array)
+    Components Used: 
+        - NWB Loader
+        - Trial chunker
+        
+5. Movement Decoder
+    What it does: 
+    - Trains an LDA classifier on spike data during movements
+    Inputs: 
+    - Movement times (array)
+    - Spike data timeseries (array)
+    Outputs:
+    - Accuracy of model on training and test data (float)
+    - Plots of LDA model performance
+    Components Used:
+    - Trial Chunker
+    - Movement Detector
 
 ### Interactions:
 
