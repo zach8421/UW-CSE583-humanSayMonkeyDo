@@ -184,10 +184,10 @@ Dependencies: numpy, pynwb, pandas (implicit)
 import numpy as np
 
 # Custom package imports - configuration
-from CSE583_humanSayMonkeyDo.load_config import get_data_paths
+from cse583_human_say_monkey_do.load_config import get_data_paths
 
 # Custom package imports - data processing functions
-from CSE583_humanSayMonkeyDo.data_formatting import (
+from cse583_human_say_monkey_do.data_formatting import (
     get_human_kinematics,
     get_chunk_spikes_binned_windowed
 )
