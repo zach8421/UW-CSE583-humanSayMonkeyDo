@@ -1,6 +1,6 @@
 """Demonstrates how to call the package's greeting helper."""
 
-from CSE583_humanSayMonkeyDo import say_hello
+from cse583_human_say_monkey_do import say_hello
 
 
 def main() -> None:

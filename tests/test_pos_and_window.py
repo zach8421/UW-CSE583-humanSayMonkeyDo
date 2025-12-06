@@ -2,7 +2,7 @@
 import numpy as np
 import pytest
 from types import SimpleNamespace
-from CSE583_humanSayMonkeyDo.data_formatting import (
+from cse583_human_say_monkey_do.data_formatting import (
     get_pos_chunk,
     get_windowed_pos_chunk
 )

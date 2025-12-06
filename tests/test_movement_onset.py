@@ -1,7 +1,7 @@
 # tests/test_movement_onset.py
 import numpy as np
 from types import SimpleNamespace
-from src.CSE583_humanSayMonkeyDo.analysis import get_movement_onset_times
+from src.cse583_human_say_monkey_do.analysis import get_movement_onset_times
 
 
 def test_get_movement_onset_basic():
