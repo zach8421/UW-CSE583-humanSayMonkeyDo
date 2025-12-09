@@ -1,6 +1,12 @@
-"""Tests for get_movement_onset_times function"""
+"""
+Tests for get_movement_onset_times function:
+- Smoke test
+- One-shot test
+- Edge test
+- Pattern test
+"""
 
-from cse583_human_say_monkey_do.core import get_movement_onset_times
+from cse583_human_say_monkey_do.analysis import get_movement_onset_times
 import numpy as np
 from types import SimpleNamespace
 
