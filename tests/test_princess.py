@@ -82,9 +82,6 @@ def test_princess_edge_get_movement_onset():
     note: This test checks how the function deals with negative velocity thresholds.
         It will raise a ValueError if the velocity threshold is negative.
     """
-    fake_data = fake_hdf()
-    go_cue_time = np.array([0.1, 1.0])
-    window = [-0.1, 1]
     threshold_tests = [0.1, 0.5]
 
     for val in threshold_tests: 
