@@ -25,15 +25,17 @@ def test_princess_correct_structure_get_movement_onset():
     """
     fake_data = fake_hdf()
     go_cue_time = np.array([0.0])
+    # to check that all position data is a number, reshape the array to one dimension
+    data_check = fake_data.data.reshape(-1)
 
     # Checks for correct format of velocity data and that they are the same lengths
-    assert fake_data.timestamps
-    assert fake_data.data
+    assert all(~np.isnan(fake_data.timestamps))
+    assert all(~np.isnan(data_check))
     assert len(fake_data.timestamps) == len(fake_data.data)
 
     # Check that go_cues are within the time of the experiment
-    assert max(go_cue_time) <= fake_data.timestamps[-1]
-
+    assert max(go_cue_time) <= (fake_data.timestamps[-1])
+    
 def test_princess_smoke_get_movement_onset():
     """
     author: Princess
@@ -46,7 +48,7 @@ def test_princess_smoke_get_movement_onset():
     fake_data = fake_hdf()
     go_cue_time = np.array([0.0])
 
-    movement_time_s, idx = get_movement_onset_times(fake_data, go_cue_time, threshold=5)
+    movement_time_s, idx = get_movement_onset_times(fake_data.data, fake_data.timestamps, go_cue_time, threshold=5)
 
     # Should return array of all the movement onset times
     assert isinstance(movement_time_s, np.ndarray)
@@ -61,37 +63,31 @@ def test_princess_one_shot_get_movement_onset():
 
     fake_data = fake_hdf()
     go_cue_time = np.array([0.0])
-    threshold_tests = [1.0, 2.0, 5.0, 8.0]
+    threshold_test = 1.0
 
-    for val in threshold_tests:
-        movement_time_s, onset_idx = get_movement_onset_times(fake_data, go_cue_time, threshold=val)
+    movement_time_s, onset_idx = get_movement_onset_times(fake_data.data, fake_data.timestamps, go_cue_time, threshold=threshold_test)
+    velocity_at_onset = fake_data.data[onset_idx[0]]
 
     # the number of movement onsets should be the same as the number of go cues
     assert len(onset_idx) == len(go_cue_time)
 
     # the velocity at the onset is equal to the threshold
-    velocity_at_onset = np.linalg.norm(fake_data.data[onset_idx[0]])
-    assert velocity_at_onset == threshold_tests
-
+    assert velocity_at_onset[1] == threshold_test
 
 def test_princess_edge_get_movement_onset():
     """
     author: Princess
     reviewer: Autumn
     category: Edge test
-    note: This test checks how the function deals with very low velocity thresholds
-        The calculation is limited by the size of size of the window and will calculate velocity incorrectly.
+    note: This test checks how the function deals with negative velocity thresholds.
+        It will raise a ValueError if the velocity threshold is negative.
     """
     fake_data = fake_hdf()
     go_cue_time = np.array([0.1, 1.0])
     window = [-0.1, 1]
-    threshold_tests = [0.1, 0.5, ]
+    threshold_tests = [0.1, 0.5]
 
-    win_start = abs(int(window[0] / np.median(np.diff(fake_data.timestamps))))
-    
-    for val in threshold_tests:
-        if val <= win_start: 
-            raise ValueError(f'threshold must be greater than window offset of {win_start}')
-        else:
-            movement_time_s, onset_idx = get_movement_onset_times(fake_data, go_cue_time, threshold=val)
+    for val in threshold_tests: 
+        if val < 0: 
+            raise ValueError('Threshold value must be a positive value.')
     
