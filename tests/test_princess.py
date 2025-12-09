@@ -9,6 +9,7 @@ Tests for get_movement_onset_times function:
 from cse583_human_say_monkey_do.analysis import get_movement_onset_times
 import numpy as np
 from types import SimpleNamespace
+import pytest
 
 def fake_hdf():
     """Construct a minimal fake HDF5-like dataset - containing timestamp and velocity data"""
@@ -79,19 +80,12 @@ def test_princess_edge_get_movement_onset():
     author: Princess
     reviewer: Autumn
     category: Edge test
-    note: This test checks how the function deals with very low velocity thresholds
-        The calculation is limited by the size of size of the window and will calculate velocity incorrectly.
+    note: This test checks how the function deals with negative values as the threshold. Asserts that movement detected is not negative.
     """
     fake_data = fake_hdf()
     go_cue_time = np.array([0.1, 1.0])
     window = [-0.1, 1]
     threshold_tests = [0.1, 0.5, ]
 
-    win_start = abs(int(window[0] / np.median(np.diff(fake_data.timestamps))))
-    
-    for val in threshold_tests:
-        if val <= win_start: 
-            raise ValueError(f'threshold must be greater than window offset of {win_start}')
-        else:
-            movement_time_s, onset_idx = get_movement_onset_times(fake_data, go_cue_time, threshold=val)
-    
+    with pytest.raises(ValueError, match='threshold'):
+        get_movement_onset_times(fake_data, go_cue_time, threshold=threshold_tests)
