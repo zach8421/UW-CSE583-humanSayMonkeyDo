@@ -17,28 +17,28 @@
 ### Software Components:
 
 1. Data Loader
-    What it does: 
+    - What it does: 
         - Loads in neural and kinematic data for a NWB data file from the DANDI database. 
         - Specifies which dataset to load in
         - Pulls relevant trial information 
-    Inputs (with type information): 
+    - Inputs (with type information): 
         - NWB file path (str)
         - Primate (str) - specify which data type to load in (human or monkey)
-    Outputs (with type information):
+    - Outputs (with type information):
         - Data file (NWBFile Object)
         - Trial time in seconds (numpy.ndarray)
         - Time of go cues (numpy.ndarray)
-    Components used:
+    - Components used:
         - None
 
 2. Data Formatter
-    What it does:
+    - What it does:
         - Splits the experiment timeseries into equal sized trials at a given time window. 
         - Creates time-aligned chunks of neural activity and kinematic data.
-    Inputs: 
+    - Inputs: 
         - Trial time in seconds (numpy.ndarray)
         - Time of go cues (numpy.ndarray)
-    Outputs: 
+    - Outputs: 
         - All trial chunks (list)
         - Neural data within a trial chunk (array)
             - Spiking data of all recording units for monkey data
@@ -46,30 +46,30 @@
         - Kinematic data during trial (array)
             - 2D cursor position for monkey data
             - Phonetic trajectory data for human data
-    Components Used: 
+    - Components Used: 
         - Data Loader - To make trial time chunks, this component needs the full timeseries and trial information pulled from the original dataset.
 
 3. Visualization Manager
-    What it does: 
+    - What it does: 
         - Generates plot of kinematic and neural data of the full time series - to quality check the data loaded in.
         - Generates plots of the positional and neural data throughout the duration of a trial.
-    Inputs: 
+    - Inputs: 
         - Trial Chunks (list) - output from Trial chunker
         - 2D position during each trial (array)
         - Spiking data timeseries of all recording units (array)
-    Output: 
+    - Output: 
         - Plot of cursor movement in x/y position 
         - Plot of neural population firing rates of all recording units
-    Components Used: 
+    - Components Used: 
         - Data Loader - this component needs the original time stamps to plot the full timeseries
         - Data Formatter - to make single trial plots, this component needs to pull the chunked behavior and neural data from Data Formatter
 
 4. Movement Detector
-    What it does: 
+    - What it does: 
         - Calculates the movement velocity as change in behavior kinematics
         - For monkey data, calculates the velocity as change in cursor position following a go cue.
         - For human data, calculate that onset of speech during a trial. 
-    Inputs: 
+    - Inputs: 
         - Trial chunks (list) - output from Data Formatter
         - Kinematic data (array)
             - 2D position timeseries during each trial for monkey data
@@ -78,27 +78,27 @@
             - Spiking data timeseries of all recording units for monkey data
             - Phonetic trajectory array for human data
         - Speed threshold (int) - above this value, the change in position is equal to a movement
-    Outputs: 
+    - Outputs: 
         - Movement times (array)
         - Movement velocity (array)
         - Spike data during stationary and movement periods (array)
-    Components Used: 
+    - Components Used: 
         - Data Formatter - to calculate behavior onset within a trial, this component needs to run within trial time chunks
         - Visualizer - to quality check movement detection, the visualizer is used to change in behavior over time of trials
 
 5. Movement Decoder
-    What it does: 
+    - What it does: 
         - Trains an LDA classifier on spike data during behavior.
         - Calculates how well the neural data can be used to predict motor movements.
         - Generates plots of model performance .
-    Inputs: 
+    - Inputs: 
         - Movement times (array) - output from Movement Detector
         - Neural Spike data timeseries (array) 
         - Trial time chunks (array)
-    Outputs:
+    - Outputs:
         - Accuracy of model on training and test data (float)
         - Plots of Model performance
-    Components Used:
+    - Components Used:
         - Data Formatter - this decoder component must run on the neural activity and behavior within trials, since the neural activity corresponds to one motor movement
         - Movement Detector - this component uses the movement detector to determine neural activity that is related to the onset of movement
 
