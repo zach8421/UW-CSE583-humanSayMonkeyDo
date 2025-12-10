@@ -69,9 +69,18 @@ If it doesn't exist, create it from the environment file:
 conda env create -f environment.yaml
 ```
 
+If it already exists and you want to update it (e.g., after pulling new changes):
+
+```bash
+conda env update -f environment.yaml --prune
+```
+
+> **Note**: The `--prune` flag removes packages that are no longer in `environment.yaml`, ensuring your environment matches exactly what's specified.
+
 This will:
 
-- Create a new conda environment named `humanSayMonkeyDo`
+- Create a new conda environment named `humanSayMonkeyDo` (if creating)
+- Update an existing environment to match the latest `environment.yaml` (if updating)
 - Install all required Python packages and dependencies
 - Install the DANDI CLI tool for data download
 
@@ -112,29 +121,11 @@ dandi --version
 
 If the DANDI CLI is not found, ensure your conda environment is activated.
 
-Navigate to the monkey data directory:
+#### Option A: Download Monkey Subset (Recommended)
 
-```bash
-cd data/monkey
-```
+This downloads only the subset containing subject J data, which is sufficient for most development and testing tasks.
 
-You have two options for downloading the dataset:
-
-#### Option A: Download Full Monkey Dataset
-
-> Note: DANDI downloads usually create a directory named after the dataset
-(e.g., 000688/). The commands below flatten that structure by moving
-the files directly into `data/monkey` and removing the extra folder.
-
-**Warning:** If .nwb files already exist in `data/monkey`, the `mv` command may overwrite files. Use with caution.
-
-```bash
-dandi download DANDI:000688/0.250122.1735
-mv 000688/* .
-rmdir 000688
-```
-
-#### Option B: Download Monkey Subset (Recommended for Testing)
+From the project root directory:
 
 ```bash
 dandi download -e refresh -f pyout --path-type exact \
@@ -142,7 +133,19 @@ dandi download -e refresh -f pyout --path-type exact \
   "https://dandiarchive.org/dandiset/000688/0.250122.1735/files?location=sub-J"
 ```
 
-This downloads only the subset containing subject J data, which is sufficient for most development and testing tasks.
+#### Option B: Download Full Monkey Dataset (Advanced)
+
+> **Warning:** Full dataset is much larger (tens of GB). Only use if you need all subjects.
+
+From the project root directory:
+
+```bash
+dandi download -e refresh -f pyout --path-type exact \
+  --output-dir data/monkey \
+  DANDI:000688/0.250122.1735
+```
+
+> Note: The full download will create subject subdirectories (e.g., `sub-J/`, `sub-L/`, etc.) inside `data/monkey/`.
 
 ### 6. Download the Human Dataset
 
@@ -157,29 +160,11 @@ dandi --version
 
 If the DANDI CLI is not found, ensure your conda environment is activated.
 
-Navigate to the human data directory:
+#### Option A: Download Human Subset (Recommended)
 
-```bash
-cd data/human
-```
+This downloads a small subset for subject GP33, which is sufficient for most development and testing tasks.
 
-You have two options for downloading the dataset:
-
-#### Option A: Download Full Human Dataset
-
-As with the monkey dataset, DANDI will create a directory matching the
-dataset ID (e.g., 000019/). The commands below flatten that structure so
-all .nwb files live directly in data/human.
-
-**Warning:** If .nwb files already exist in `data/human`, the `mv` command may overwrite files. Use with caution.
-
-```bash
-dandi download DANDI:000019/0.220126.2148
-mv 000019/* .
-rmdir 000019
-```
-
-#### Option B: Download Human Subset (Recommended for Testing)
+From the project root directory:
 
 ```bash
 dandi download -e refresh -f pyout --path-type exact \
@@ -187,90 +172,105 @@ dandi download -e refresh -f pyout --path-type exact \
   "https://dandiarchive.org/dandiset/000019/0.220126.2148/files?location=sub-GP33"
 ```
 
-This downloads a small subset for subject GP33, which is sufficient for most development and testing tasks.
+#### Option B: Download Full Human Dataset (Advanced)
 
-### 7. Verify Datasets
+> **Warning:** Full dataset is much larger (tens of GB). Only use if you need all subjects.
 
-From the project root, list the contents of each data directory.
-
-#### Expected monkey subset output
+From the project root directory:
 
 ```bash
-ls data/monkey
+dandi download -e refresh -f pyout --path-type exact \
+  --output-dir data/human \
+  DANDI:000019/0.220126.2148
 ```
 
-You should see files similar to:
+> Note: The full download will create subject subdirectories (e.g., `sub-GP33/`, `sub-GP31/`, etc.) inside `data/human/`.
+
+### 7. Verify Installation
+
+From the project root directory, verify your downloads:
+
+#### Verify Monkey Dataset
+
+Check the monkey data directory structure:
+
+```bash
+ls data/monkey/sub-J/
+```
+
+Expected output for **Option A (subset download)**:
 
 ```plaintext
-sub-J_session1.nwb
-sub-J_session2.nwb
-sub-J_session3.nwb
+sub-J_ses-CO-20160405_behavior+ecephys.nwb
+sub-J_ses-CO-20160406_behavior+ecephys.nwb
+sub-J_ses-CO-20160407_behavior+ecephys.nwb
 ```
 
-#### Human subset example
+#### Verify Human Dataset
+
+Check the human data directory structure:
 
 ```bash
-ls data/human
+ls data/human/sub-GP33/
 ```
 
-Expected output:
+Expected output for **Option A (subset download)**:
 
 ```plaintext
-sub-GP33_session1.nwb
-sub-GP33_session2.nwb
+sub-GP33_ses-GP33-B1.nwb
+sub-GP33_ses-GP33-B30.nwb
+sub-GP33_ses-GP33-B5.nwb
 ```
 
-If the expected .nwb files appear, your datasets downloaded correctly.
+> **Note**: If you used Option B (full dataset download), you may see additional subject directories and files.
 
-### 8. Verify Installation
+#### Test Python Environment
 
-Return to the project root:
+Verify that your conda environment is activated and the required packages are available:
 
 ```bash
-cd ../..
+python -c "from pynwb import NWBHDF5IO; print('Success: NWB environment ready!')"
 ```
 
-Verify that the data structure looks correct:
+If you see `Success: NWB environment ready!`, your setup is complete!
 
-```bash
-ls -la data/monkey/
-```
-
-You should see `.nwb` files in this directory.
-
-Run a quick test to ensure everything is working:
-
-```bash
-python - << 'EOF'
-from pynwb import NWBHDF5IO
-print("Imports successful. NWB IO ready.")
-EOF
-```
-
-If this runs without errors, your environment is set up correctly!
+**Troubleshooting**: If you get `command not found: python`, make sure the conda environment is activated. You should see `(humanSayMonkeyDo)` at the start of your command prompt.
 
 ## Directory Structure
 
-After setup, your project should look like this:
+After completing the setup, your key project structure should look like this:
 
 ```plaintext
 humanSayMonkeyDo/
-├── environment.yaml
-├── config.yaml
-├── data/
+├── environment.yaml         # Conda environment configuration
+├── config.yaml              # Project configuration
+├── pyproject.toml           # Python project metadata
+├── data/                    # Downloaded datasets
 │   ├── monkey/
-│   │   ├── sub-J_*.nwb
-│   │   └── ...
+│   │   └── sub-J/
+│   │       ├── sub-J_ses-CO-20160405_behavior+ecephys.nwb
+│   │       ├── sub-J_ses-CO-20160406_behavior+ecephys.nwb
+│   │       └── sub-J_ses-CO-20160407_behavior+ecephys.nwb
 │   └── human/
-│       ├── sub-*.nwb
+│       └── sub-GP33/
+│           ├── sub-GP33_ses-GP33-B1.nwb
+│           ├── sub-GP33_ses-GP33-B30.nwb
+│           └── sub-GP33_ses-GP33-B5.nwb
+├── src/                     # Source code
+│   └── cse583_human_say_monkey_do/
+│       ├── __init__.py
+│       ├── core.py
+│       ├── data_loading.py
 │       └── ...
-├── src/
-│   └── ...
-├── notebooks/
-│   └── ...
-└── tests/
-    └── ...
+├── examples/                # Example notebooks and scripts
+│   ├── human_example.ipynb
+│   ├── monkey_example.ipynb
+│   └── example_usage.py
+├── tests/                   # Test files
+└── doc/                     # Documentation
 ```
+
+> **Note**: This shows the essential structure after recommended subset downloads (Option A). Full dataset downloads (Option B) may contain additional subject directories. Additional project files and documentation not shown here may also be present.
 
 ## Troubleshooting
 
