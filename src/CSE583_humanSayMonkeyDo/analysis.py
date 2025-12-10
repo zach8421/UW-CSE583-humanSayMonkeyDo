@@ -148,7 +148,7 @@ def train_lda_classifier(data_matrices, labels):
 
     # Split into train and test sets (80/20 split)
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42, stratify=y
+        X, y, test_size=0.4, random_state=42, stratify=y
     )
 
     # Train LDA classifier
