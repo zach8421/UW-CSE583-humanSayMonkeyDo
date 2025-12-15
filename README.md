@@ -1,5 +1,6 @@
 # Contributions:
 Autumn (AJ) Mallory: Data loading and Analysis
+Princess Tarabishi: Component Specifications and Movement Onset Tests
 
 
 # humanSayMonkeyDo Setup Guide
