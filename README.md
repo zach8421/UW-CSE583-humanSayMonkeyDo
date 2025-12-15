@@ -1,3 +1,7 @@
+# Contributions:
+Autumn (AJ) Mallory: Data loading and Analysis
+
+
 # humanSayMonkeyDo Setup Guide
 
 This project analyzes human and monkey neural recordings using NWB-formatted datasets from the DANDI Archive.
