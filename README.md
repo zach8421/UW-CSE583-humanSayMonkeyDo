@@ -1,6 +1,8 @@
 # Contributions:
 Autumn (AJ) Mallory: Data loading and Analysis
 
+Yici Chen: Functional specifications and tests writing 
+
 
 # humanSayMonkeyDo Setup Guide
 
