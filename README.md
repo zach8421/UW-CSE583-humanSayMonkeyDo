@@ -1,3 +1,8 @@
+# Contributions:
+Autumn (AJ) Mallory: Data loading and Analysis
+Princess Tarabishi: Component Specifications and Movement Onset Tests
+
+
 # humanSayMonkeyDo Setup Guide
 
 This project analyzes human and monkey neural recordings using NWB-formatted datasets from the DANDI Archive.
