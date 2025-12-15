@@ -5,8 +5,13 @@ This project analyzes human and monkey neural recordings using NWB-formatted dat
 ## Contributions
 
 **Autumn (AJ) Mallory**: Data loading and Analysis
+
 **Princess Tarabishi**: Component Specifications and Movement Onset Tests
+
 **Zach Greenman**: Package restructuring, Documentation & Setup Guide, Testing suite, Project packaging (pyproject.toml)
+
+**Yici Chen**: Functional Specifications and Tests Writing
+
 
 ## Setup Guide
 
