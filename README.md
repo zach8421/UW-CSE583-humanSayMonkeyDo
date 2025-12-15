@@ -1,11 +1,14 @@
-# Contributions:
-Autumn (AJ) Mallory: Data loading and Analysis
-Princess Tarabishi: Component Specifications and Movement Onset Tests
-
-
-# humanSayMonkeyDo Setup Guide
+# humanSayMonkeyDo
 
 This project analyzes human and monkey neural recordings using NWB-formatted datasets from the DANDI Archive.
+
+## Contributions
+
+**Autumn (AJ) Mallory**: Data loading and Analysis
+**Princess Tarabishi**: Component Specifications and Movement Onset Tests
+**Zach Greenman**: Package restructuring, Documentation & Setup Guide, Testing suite, Project packaging (pyproject.toml)
+
+## Setup Guide
 
 This guide will walk you through setting up the conda environment and downloading the required datasets for the humanSayMonkeyDo project.
 
