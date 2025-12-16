@@ -12,6 +12,7 @@ This project analyzes human and monkey neural recordings using NWB-formatted dat
 
 **Yici Chen**: Functional Specifications and Tests Writing
 
+**Yi Ding**: project setup script, solving project dependencies and build issues, refactor several function, error handling and corresponding tests
 
 ## Setup Guide
 
